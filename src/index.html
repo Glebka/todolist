@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <script>
+            /**
+             * TodoItemView class has been already implemented
+             * */
+            var itemView = new TodoItemView();
+            itemView.setRootElement(document.getElementById('....'));
+            itemView.setModel(listModel.getTodoItem(0));
+            itemView.render();
+
+            class TodoListView {
+
+            }
+
+            class FooterView {
+
+            }
+
+            var footer = new FooterView();
+            var todoList = new TodoListView();
+            footer.setListView(todoList);
+
+        </script>
+    </head>
+    <body>
+        <div>
+            <!-- main view begin -->
+            <input type="text"/>
+            <div>
+                <!-- list begin -->
+                <div>
+                    <input type="checkbox"><p>Text</p>
+                </div>
+                <div>
+                    <input type="checkbox"><p>Text</p>
+                </div>
+                <div>
+                    <input type="checkbox"><p>Text</p>
+                </div>
+                <div>
+                    <input type="checkbox"><p>Text</p>
+                </div>
+                <div>
+                    <input type="checkbox"><p>Text</p>
+                </div>
+                <!-- list end -->
+            </div>
+            <div>
+                <!-- footer -->
+            </div>
+            <!-- main view end -->
+        </div>
+    </body>
+</html>
