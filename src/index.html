@@ -1,55 +1,35 @@
 <html>
     <head>
-        <script>
-            /**
-             * TodoItemView class has been already implemented
-             * */
-            var itemView = new TodoItemView();
-            itemView.setRootElement(document.getElementById('....'));
-            itemView.setModel(listModel.getTodoItem(0));
-            itemView.render();
+        <script type="text/javascript" src="js/models/TodoItemModel.js"></script>
+        <script type="text/javascript" src="js/models/TodoListModel.js"></script>
+        <script type="text/javascript" src="js/views/FooterView.js"></script>
+        <script type="text/javascript" src="js/views/MainView.js"></script>
+        <script type="text/javascript" src="js/views/TodoListView.js"></script>
+        <script type="text/javascript" src="js/views/TodoItemView.js"></script>
+        <script type="text/javascript">
+            window.onload = function() {
+                var todoListModel = new TodoListModel();
+                todoListModel.addTodoItem("Buy a car");
+                todoListModel.addTodoItem("Buy an apartaments");                
 
-            class TodoListView {
+                console.log(todoListModel.getLength());
 
+                var body = document.getElementsByTagName('body')[0];
+                var mainView = new MainView(body);
+
+                var todoItemsListView = new TodoListView();
+                todoItemsListView.setModel(todoListModel);
+
+                var footer = new FooterView();
+                footer.setModel(todoListModel);
+
+                mainView.setListView(todoItemsListView);
+                mainView.setFooter(footer);
+
+                mainView.render();
             }
-
-            class FooterView {
-
-            }
-
-            var footer = new FooterView();
-            var todoList = new TodoListView();
-            footer.setListView(todoList);
-
         </script>
     </head>
     <body>
-        <div>
-            <!-- main view begin -->
-            <input type="text"/>
-            <div>
-                <!-- list begin -->
-                <div>
-                    <input type="checkbox"><p>Text</p>
-                </div>
-                <div>
-                    <input type="checkbox"><p>Text</p>
-                </div>
-                <div>
-                    <input type="checkbox"><p>Text</p>
-                </div>
-                <div>
-                    <input type="checkbox"><p>Text</p>
-                </div>
-                <div>
-                    <input type="checkbox"><p>Text</p>
-                </div>
-                <!-- list end -->
-            </div>
-            <div>
-                <!-- footer -->
-            </div>
-            <!-- main view end -->
-        </div>
     </body>
 </html>
