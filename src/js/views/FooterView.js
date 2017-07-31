@@ -1,8 +1,8 @@
 'use strict'
 
 class FooterView {
-    constructor(rootElement) {
-        this._rootElement = rootElement;
+    constructor() {
+        this._rootElement = null;
         this._footerContainer = document.createElement('div');
         this._itemsCountElement = document.createElement('p');
         this._allButton = document.createElement('button');

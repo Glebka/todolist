@@ -9,11 +9,11 @@ class TodoListView {
      * Constructs TodoListView isntance
      * @param {HTMLElement} rootElement - place where to render todo items
      */
-    constructor(rootElement) {
+    constructor() {
         /**
          * _rootElement {HTMLElement} - place where to render todo items
          */
-        this._rootElement = rootElement;        
+        this._rootElement = null;        
 
         /**
          * _list {Array[TodoItemView]} - container for TodoItemView instances
@@ -40,7 +40,8 @@ class TodoListView {
         this._listModel = model;
         for(var i=0; i < this._listModel.getLength(); i++) {
             var itemModel = this._listModel.getTodoItem(i);
-            var itemView = new TodoItemView(this._itemsContainerElement);
+            var itemView = new TodoItemView();
+            itemView.setRootElement(this._itemsContainerElement);
             itemView.setModel(itemModel);
             this._list.push(itemView);
         }

@@ -9,12 +9,12 @@ class TodoItemView {
      * Constructs Todo list item view
      * @param {HTMLElement} rootElement - where to append html code of todo item
      */
-    constructor(rootElement) {
+    constructor() {
 
         /**
          * _rootElement {HTMLElement} - container for todo item's view HTML code
          */
-        this._rootElement = rootElement;
+        this._rootElement = null;
 
         /**
          * _model {TodoItemModel} - data that should be rendered
