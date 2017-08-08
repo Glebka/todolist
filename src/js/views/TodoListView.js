@@ -13,12 +13,7 @@ class TodoListView {
         /**
          * _rootElement {HTMLElement} - place where to render todo items
          */
-        this._rootElement = null;        
-
-        /**
-         * _list {Array[TodoItemView]} - container for TodoItemView instances
-         */
-        this._list = [];
+        this._rootElement = null;                
 
         /**
          * _listModel {TodoListModel} - contains list with todo items data
@@ -37,24 +32,21 @@ class TodoListView {
      * @param {TodoListModel} model
      */
     setModel(model) {
-        this._listModel = model;
-        for(var i=0; i < this._listModel.getLength(); i++) {
-            var itemModel = this._listModel.getTodoItem(i);
-            var itemView = new TodoItemView();
-            itemView.setRootElement(this._itemsContainerElement);
-            itemView.setModel(itemModel);
-            this._list.push(itemView);
-        }
+        this._listModel = model;        
     }
 
     /**
      * Renders all todo items into rootElement
      */
     render() {
-        for(var i=0; i < this._list.length; i++) {
-            var itemView = this._list[i];
-            itemView.render();
-        }
+        this._itemsContainerElement.innerHTML = "";
+        for(var i=0; i < this._listModel.getLength(); i++) {
+            var itemModel = this._listModel.getTodoItem(i);
+            var itemView = new TodoItemView();
+            itemView.setRootElement(this._itemsContainerElement);
+            itemView.setModel(itemModel);
+            itemView.render();            
+        }        
         this._rootElement.appendChild(this._itemsContainerElement);
     }
 

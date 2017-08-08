@@ -8,22 +8,11 @@
         <script type="text/javascript" src="js/views/TodoItemView.js"></script>
         <script type="text/javascript">
             window.onload = function() {
-                var todoListModel = new TodoListModel();
-                todoListModel.addTodoItem("Buy a car");
-                todoListModel.addTodoItem("Buy an apartaments");                
-
+                var todoListModel = new TodoListModel();                                
                 var body = document.getElementsByTagName('body')[0];
+
                 var mainView = new MainView(body);
-
-                var todoItemsListView = new TodoListView();
-                todoItemsListView.setModel(todoListModel);
-
-                var footer = new FooterView();
-                footer.setModel(todoListModel);
-
-                mainView.setListView(todoItemsListView);
-                mainView.setFooter(footer);
-
+                mainView.setModel(todoListModel);
                 mainView.render();
             }
         </script>

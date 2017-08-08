@@ -19,6 +19,7 @@ class TodoListModel {
     addTodoItem(text) {
         var item = new TodoItemModel(text);
         this._list.push(item);
+        console.log('New todo item has been added: ', text);
     }
 
     /**

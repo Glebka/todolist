@@ -29,6 +29,7 @@ class FooterView {
     }
 
     render() {
+        // TODO: check this code: it may generate duplicated html elements
         this._itemsCountElement.innerText = this._listModel.getLength() + ' items';
         this._rootElement.appendChild(this._footerContainer);
     }
