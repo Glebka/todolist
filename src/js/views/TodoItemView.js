@@ -39,10 +39,15 @@ class TodoItemView {
 
         this._itemElement.appendChild(this._checkbox);
         this._itemElement.appendChild(this._textElement);         
+        this._checkbox.onchange = this._onCheckboxClicked.bind(this);
     }
 
     setRootElement(element) {
         this._rootElement = element;
+    }
+
+    _onCheckboxClicked() {
+        this._model.setState(this._checkbox.checked);
     }
 
     /**

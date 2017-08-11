@@ -18,6 +18,8 @@ class FooterView {
         this._footerContainer.appendChild(this._completedButton);
 
         this._listModel = null;
+
+        eventsManager.subscribeToEvent('todoItemChanged', this.render.bind(this));
     }
 
     setRootElement(element) {
@@ -26,11 +28,18 @@ class FooterView {
 
     setModel(model) {
         this._listModel = model;
-    }
+    }    
 
     render() {
         // TODO: check this code: it may generate duplicated html elements
-        this._itemsCountElement.innerText = this._listModel.getLength() + ' items';
+        var pendingTodos = 0;
+        for(var i=0; i<this._listModel.getLength(); i++) {
+            var item = this._listModel.getTodoItem(i);
+            if (item.getState() === false) {
+                pendingTodos++;
+            }
+        }
+        this._itemsCountElement.innerText = pendingTodos + ' items';
         this._rootElement.appendChild(this._footerContainer);
     }
 }
