@@ -19,7 +19,7 @@ class FooterView {
 
         this._listModel = null;
 
-        eventsManager.subscribeToEvent('todoItemChanged', this.render.bind(this));
+        EventsManager.subscribeToEvent('todoItemChanged', this.render.bind(this));
     }
 
     setRootElement(element) {

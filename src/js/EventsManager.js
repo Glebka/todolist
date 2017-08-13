@@ -1,10 +1,28 @@
+
+'use strict';
+
 class EventsManager {
+
+    static _getInstance() {
+        if (!EventsManager._instance) {
+            EventsManager._instance = new EventsManager();            
+        }
+        return EventsManager._instance;
+    }
 
     constructor() {
         this._subscribers = {};
     }
 
-    emitEvent(sender, eventName, eventData) {
+    static emitEvent(sender, eventName, eventData) {
+        return EventsManager._getInstance()._do_emitEvent(sender, eventName, eventData);
+    }
+
+    static subscribeToEvent(eventName, callback) {
+        return EventsManager._getInstance()._do_subscribeToEvent(eventName, callback);
+    }
+
+    _do_emitEvent(sender, eventName, eventData) {
         var subscribers = this._subscribers[eventName];
         if (subscribers) {
             for(var i=0; i<subscribers.length; i++) {
@@ -14,7 +32,7 @@ class EventsManager {
         }            
     }
 
-    subscribeToEvent(eventName, callback) {
+    _do_subscribeToEvent(eventName, callback) {
         if (this._subscribers[eventName]) {
             this._subscribers[eventName].push(callback);
         } else {
@@ -23,6 +41,14 @@ class EventsManager {
     }
 
 }
+
+EventsManager._instance = null;
+
+//-------------------
+
+//EventsManager.emitEvent(...);
+//EventsManager.subscribeToEvent(...);
+
 
 /**
  * var eventsManager = new EventManager();

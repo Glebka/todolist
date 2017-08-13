@@ -47,8 +47,8 @@ class TodoItemModel {
      * @param  {String} text - new text of todo item
      */
     setText(text) {
-        this._text = text;
-        eventsManager.emitEvent(this, 'todoItemChanged');
+        this._text = text;        
+        EventsManager.emitEvent(this, 'todoItemChanged');
     }
 
     /**
@@ -57,7 +57,7 @@ class TodoItemModel {
      */
     setState(state) {
         this._state = state;
-        eventsManager.emitEvent(this, 'todoItemChanged');
+        EventsManager.emitEvent(this, 'todoItemChanged');
     }
 
 }

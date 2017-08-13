@@ -7,12 +7,10 @@
         <script type="text/javascript" src="js/views/TodoListView.js"></script>
         <script type="text/javascript" src="js/views/TodoItemView.js"></script>
         <script type="text/javascript" src="js/EventsManager.js"></script>
-        <script type="text/javascript">
-            window.onload = function() {
-                window.eventsManager = new EventsManager();
+        <script type="text/javascript">            
+            window.onload = function() {                
                 var todoListModel = new TodoListModel();                                
-                var body = document.getElementsByTagName('body')[0];
-
+                var body = document.getElementsByTagName('body')[0];                
                 var mainView = new MainView(body);
                 mainView.setModel(todoListModel);
                 mainView.render();
