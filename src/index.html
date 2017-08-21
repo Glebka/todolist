@@ -10,7 +10,15 @@
         <script type="text/javascript" src="js/EventsManager.js"></script>
         <script type="text/javascript">            
             window.onload = function() {                
-                var todoListModel = new TodoListModel();
+                var todoListModel = TodoListModel.fromJSON(localStorage.todoList);
+
+                EventsManager.subscribeToEvent('todoItemChanged', function() {
+                    localStorage.todoList = todoListModel.toJSON();
+                });
+
+                EventsManager.subscribeToEvent('todoItemAdded', function() {
+                    localStorage.todoList = todoListModel.toJSON();
+                });
 
                 var body = document.getElementsByTagName('body')[0];
                 var todoListWrapper = document.createElement('div');

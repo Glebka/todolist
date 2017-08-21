@@ -26,6 +26,15 @@ class TodoItemModel {
         this._state = false;
     }
 
+    static fromJSON(jsonString) {
+        var unpackedJson = JSON.parse(jsonString);
+        var todoItem = new TodoItemModel();
+        for (var key in unpackedJson) {
+            todoItem[key] = unpackedJson[key];
+        }
+        return todoItem;
+    }
+
     /**
      * Gets the text of todo item
      * @returns {String} text of todo item
@@ -58,6 +67,19 @@ class TodoItemModel {
     setState(state) {
         this._state = state;
         EventsManager.emitEvent(this, 'todoItemChanged');
+    }
+
+    toString() {
+        return this.toJSON();
+    }
+
+    toJSON() {
+        var obj = {
+            _id: this._id,
+            _state: this._state,
+            _text: this._text
+        }
+        return JSON.stringify(obj); // '{"_id":"", "state": false, "text":"ttttt"}'
     }
 
 }
