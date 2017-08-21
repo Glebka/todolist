@@ -7,10 +7,13 @@ class FooterView {
         this._itemsCountElement = document.createElement('p');
         this._allButton = document.createElement('button');
         this._allButton.innerText = 'All';
+        this._allButton.value = ListDisplayMode.ALL;
         this._activeButton = document.createElement('button');
         this._activeButton.innerText = 'Active';
+        this._activeButton.value = ListDisplayMode.ACTIVE;
         this._completedButton = document.createElement('button');
         this._completedButton.innerText = 'Completed';
+        this._completedButton.value = ListDisplayMode.COMPLETED;
 
         this._footerContainer.appendChild(this._itemsCountElement);
         this._footerContainer.appendChild(this._allButton);
@@ -18,6 +21,10 @@ class FooterView {
         this._footerContainer.appendChild(this._completedButton);
 
         this._listModel = null;
+
+        this._allButton.onclick = this._onButtonClick.bind(this, this._allButton);
+        this._activeButton.onclick = this._onButtonClick.bind(this, this._activeButton);
+        this._completedButton.onclick = this._onButtonClick.bind(this, this._completedButton);
 
         EventsManager.subscribeToEvent('todoItemChanged', this.render.bind(this));
     }
@@ -28,7 +35,11 @@ class FooterView {
 
     setModel(model) {
         this._listModel = model;
-    }    
+    }
+    
+    _onButtonClick(button) {
+        EventsManager.emitEvent(this, 'displayModeChanged', Number.parseInt(button.value));
+    }
 
     render() {
         // TODO: check this code: it may generate duplicated html elements
