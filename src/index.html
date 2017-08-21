@@ -1,5 +1,6 @@
 <html>
     <head>
+        <link rel="stylesheet" href="css/main.css">
         <script type="text/javascript" src="js/models/TodoItemModel.js"></script>
         <script type="text/javascript" src="js/models/TodoListModel.js"></script>
         <script type="text/javascript" src="js/views/FooterView.js"></script>
@@ -9,9 +10,14 @@
         <script type="text/javascript" src="js/EventsManager.js"></script>
         <script type="text/javascript">            
             window.onload = function() {                
-                var todoListModel = new TodoListModel();                                
-                var body = document.getElementsByTagName('body')[0];                
-                var mainView = new MainView(body);
+                var todoListModel = new TodoListModel();
+
+                var body = document.getElementsByTagName('body')[0];
+                var todoListWrapper = document.createElement('div');
+                todoListWrapper.classList.add('main-wrapper');
+                body.appendChild(todoListWrapper);
+
+                var mainView = new MainView(todoListWrapper);
                 mainView.setModel(todoListModel);
                 mainView.render();
             }

@@ -1,0 +1,44 @@
+.main-wrapper {
+	width: 450px;
+	margin: 0 auto;
+	padding: 10px;
+}
+.list-wrapper {
+	margin-top: 15px;
+}
+.footer-wrapper p {
+	display: inline-block;
+	padding-right: 15px;
+}
+.main-wrapper > input {
+	width: 100%;
+    border: none;
+    border-bottom: 1px solid #c0c0c0;
+    padding: 10px 5px;
+}
+.main-wrapper > input:focus {
+	outline: none;
+	border-bottom: 1px solid red;
+}
+.block-item:after {
+	content: "";
+	display: block;
+	margin: 0 auto;
+	width: 95%;
+	height: 1px;
+	background-color: silver;
+}
+.block-item:hover {
+	background-color: rgba(225, 225, 225, .8);
+}
+.block-item input[type="checkbox"] {
+	margin: 0;
+	width: 20px;
+	height: 20px;
+}
+.block-item p {
+	display: inline-block;
+	box-sizing: border-box;
+	width: 430px;
+	padding-left: 15px;
+}

@@ -25,6 +25,7 @@ class TodoItemView {
          * _itemElement {HTMLDivElement} - container for checkbox and paragraph elements
          */
         this._itemElement = document.createElement('div');
+        this._itemElement.classList.add('block-item');
 
         /**
          * _checkbox {HTMLInputElement} - sets  / displays the state of todo item

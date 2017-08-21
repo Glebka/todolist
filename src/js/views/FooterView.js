@@ -4,6 +4,7 @@ class FooterView {
     constructor() {
         this._rootElement = null;
         this._footerContainer = document.createElement('div');
+        this._footerContainer.classList.add("footer-wrapper");
         this._itemsCountElement = document.createElement('p');
         this._allButton = document.createElement('button');
         this._allButton.innerText = 'All';

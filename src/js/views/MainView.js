@@ -4,9 +4,11 @@ class MainView {
     constructor(rootElement) {
         this._rootElement = rootElement;
         this._model = null;
-        this._listView = new TodoListView();;
+        this._listView = new TodoListView();
         this._footer = new FooterView();
         this._textInput = document.createElement('input');
+        this._textInput.placeholder = "Lorem ipsum dolor sit amet";
+        this._textInput.value = "Lorem ipsum dolor sit amet";
         this._listView.setRootElement(this._rootElement);
         this._footer.setRootElement(this._rootElement);
         this._textInput.onkeypress = this._onTextInputKeyPressed.bind(this);
@@ -14,8 +16,8 @@ class MainView {
 
     _onTextInputKeyPressed(event) {
         if (event.keyCode === 13) {
-            this._model.addTodoItem(this._textInput.value)
-            this._textInput.value = "";            
+            this._model.addTodoItem(this._textInput.value);
+            this._textInput.value = "";
             this._listView.render();
             this._footer.render();
         }        
@@ -28,7 +30,7 @@ class MainView {
     }    
 
     render() {
-        this._rootElement.appendChild(this._textInput);        
+        this._rootElement.appendChild(this._textInput);
         this._listView.render();
         this._footer.render();
     }

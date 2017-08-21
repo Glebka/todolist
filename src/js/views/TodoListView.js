@@ -27,6 +27,7 @@ class TodoListView {
         this._listModel = null;
 
         this._itemsContainerElement = document.createElement('div');
+        this._itemsContainerElement.classList.add('list-wrapper');
 
         this._displayMode = ListDisplayMode.ALL;
 
