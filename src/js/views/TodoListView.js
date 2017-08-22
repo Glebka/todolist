@@ -2,9 +2,9 @@
 
 var ListDisplayMode = {};
 
-ListDisplayMode.ALL = 0;
-ListDisplayMode.ACTIVE = 1;
-ListDisplayMode.COMPLETED = 2;
+ListDisplayMode.ALL = 1;
+ListDisplayMode.ACTIVE = 2;
+ListDisplayMode.COMPLETED = 3;
 
 /**
  * Class that renders all todo items
@@ -19,7 +19,7 @@ class TodoListView {
         /**
          * _rootElement {HTMLElement} - place where to render todo items
          */
-        this._rootElement = null;                
+        this._rootElement = null;
 
         /**
          * _listModel {TodoListModel} - contains list with todo items data
@@ -32,16 +32,18 @@ class TodoListView {
         this._displayMode = ListDisplayMode.ALL;
 
         EventsManager.subscribeToEvent('todoItemChanged', this.render.bind(this));
-        EventsManager.subscribeToEvent('displayModeChanged', 
+
+        // TODO: refactor code here
+        EventsManager.subscribeToEvent('displayModeChanged',
             function(sender, eventName, eventData) {
                 this.setDisplayMode(eventData);
-        }.bind(this));
+            }.bind(this));
 
         this._hasRendered = false;
     }
 
     setRootElement(element) {
-        this._rootElement = element;        
+        this._rootElement = element;
     }
 
     /**
@@ -49,18 +51,12 @@ class TodoListView {
      * @param {TodoListModel} model
      */
     setModel(model) {
-        this._listModel = model;        
-    }
-
-    setDisplay(mode) {
-        this._displayMode = mode;
+        this._listModel = model;
     }
 
     setDisplayMode(mode) {
         this._displayMode = mode;
         this.render();
-
-        EventsManager.emitEvent(this, "displayModeSent", this._displayMode);
         console.log(this._displayMode);
     }
 
@@ -75,26 +71,36 @@ class TodoListView {
      * Renders all todo items into rootElement
      */
     render() {
-        
+
+        /**
+         * Checks whether we able to render ourselves. If no - simply return.
+         */
+        if (!this._listModel) {
+            return;
+        }
+
         if (!this._hasRendered) {
             this._rootElement.appendChild(this._itemsContainerElement);
             this._hasRendered = true;
         }
 
         this._itemsContainerElement.innerHTML = "";
-        for(var i=0; i < this._listModel.getLength(); i++) {
+        for (var i = 0; i < this._listModel.getLength(); i++) {
 
             var itemModel = this._listModel.getTodoItem(i);
             var itemState = itemModel.getState();
 
+            /**
+             * TODO: refactor code here. What if there will be more than 3 display modes.
+             */
             if (this._displayMode === ListDisplayMode.ACTIVE && itemState === false) {
                 this._renderItem(itemModel);
             } else if (this._displayMode === ListDisplayMode.COMPLETED && itemState === true) {
                 this._renderItem(itemModel);
             } else if (this._displayMode === ListDisplayMode.ALL) {
                 this._renderItem(itemModel);
-            }            
-        }                
+            }
+        }
     }
 
 }

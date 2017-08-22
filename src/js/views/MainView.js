@@ -7,7 +7,7 @@ class MainView {
         this._listView = new TodoListView();
         this._footer = new FooterView();
         this._textInput = document.createElement('input');
-        this._textInput.placeholder = "What needs to be done?";        
+        this._textInput.placeholder = "What needs to be done?";
         this._listView.setRootElement(this._rootElement);
         this._footer.setRootElement(this._rootElement);
         this._textInput.onkeypress = this._onTextInputKeyPressed.bind(this);
@@ -19,7 +19,7 @@ class MainView {
             this._textInput.value = "";
             this._listView.render();
             this._footer.render();
-        }        
+        }
     }
 
     setModel(todoModel) {
@@ -29,7 +29,7 @@ class MainView {
     }
 
     setListDisplayMode(mode) {
-        this._listView.setDisplay(mode);
+        this._listView.setDisplayMode(mode);
     }
 
     render() {
