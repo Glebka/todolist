@@ -9,7 +9,13 @@
         <script type="text/javascript" src="js/views/TodoItemView.js"></script>
         <script type="text/javascript" src="js/EventsManager.js"></script>
         <script type="text/javascript">            
-            window.onload = function() {                
+            window.onload = function() {
+
+                EventsManager.subscribeToEvent("displayModeSent", function(sender, eventName, eventData){
+                    console.log(eventData);
+                    localStorage.displayMode = eventData;
+                });    
+
                 var todoListModel = TodoListModel.fromJSON(localStorage.todoList);
 
                 EventsManager.subscribeToEvent('todoItemChanged', function() {
@@ -26,6 +32,7 @@
                 body.appendChild(todoListWrapper);
 
                 var mainView = new MainView(todoListWrapper);
+                mainView.setListDisplayMode(Number.parseInt(localStorage.displayMode));
                 mainView.setModel(todoListModel);
                 mainView.render();
             }

@@ -26,7 +26,11 @@ class MainView {
         this._model = todoModel;
         this._listView.setModel(this._model);
         this._footer.setModel(this._model);
-    }    
+    }
+
+    setListDisplayMode(mode) {
+        this._listView.setDisplay(mode);
+    }
 
     render() {
         this._rootElement.appendChild(this._textInput);

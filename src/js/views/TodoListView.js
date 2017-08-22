@@ -52,9 +52,16 @@ class TodoListView {
         this._listModel = model;        
     }
 
+    setDisplay(mode) {
+        this._displayMode = mode;
+    }
+
     setDisplayMode(mode) {
         this._displayMode = mode;
         this.render();
+
+        EventsManager.emitEvent(this, "displayModeSent", this._displayMode);
+        console.log(this._displayMode);
     }
 
     _renderItem(itemModel) {
