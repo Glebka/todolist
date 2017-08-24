@@ -13,7 +13,7 @@ class TodoItemModel {
         /**
          * _id {Number} - database ID
          */
-        this._id = null;
+        this._id = null; // TodoItemModel._generateGUID();
 
         /**
          * _text {String} - todo item text

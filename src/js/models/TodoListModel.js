@@ -60,6 +60,13 @@ class TodoListModel {
         this._list = this._list.splice(index,1);        
     }
 
+    /*removeTodoItemById(id) {
+        for(...) {
+            // search for item and delete it
+        }
+        EventsManager.emitEvent(...);
+    }*/
+
     toString() {
         return this.toJSON();
     }

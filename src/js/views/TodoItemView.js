@@ -38,6 +38,11 @@ class TodoItemView {
          */
         this._textElement = document.createElement('p');
 
+        /**
+         * TODO: create cross as button for delete function
+         * TODO: create onclick DOM event handler for cross
+         */
+
         this._itemElement.appendChild(this._checkbox);
         this._itemElement.appendChild(this._textElement);         
         this._checkbox.onchange = this._onCheckboxClicked.bind(this);
@@ -50,6 +55,12 @@ class TodoItemView {
     _onCheckboxClicked() {
         this._model.setState(this._checkbox.checked);
     }
+
+    /**
+     * _onDeleteClicked() {
+     *      EventsManager.emitEvent(..., this._model._id);
+     * }
+     */
 
     /**
      * Sets the model instance that should be rendered
