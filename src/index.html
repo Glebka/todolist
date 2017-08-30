@@ -20,6 +20,10 @@
                     localStorage.todoList = todoListModel.toJSON();
                 });
 
+                 EventsManager.subscribeToEvent("todoItemRemoved", function(){
+                    localStorage.todoList = todoListModel.toJSON();
+                });
+
                 var body = document.getElementsByTagName('body')[0];
                 var todoListWrapper = document.createElement('div');
                 todoListWrapper.classList.add('main-wrapper');

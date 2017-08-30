@@ -38,9 +38,18 @@ class TodoItemView {
          */
         this._textElement = document.createElement('p');
 
+        /**
+         * _buttonRemove {HTMLDivElement} - removes todo item
+         */
+        this._buttonRemove = document.createElement('div');
+        this._buttonRemove.innerText = "X";
+        this._buttonRemove.classList.add('remove');
+
         this._itemElement.appendChild(this._checkbox);
-        this._itemElement.appendChild(this._textElement);         
+        this._itemElement.appendChild(this._textElement); 
+        this._itemElement.appendChild(this._buttonRemove);        
         this._checkbox.onchange = this._onCheckboxClicked.bind(this);
+        this._buttonRemove.onclick = this._onButtonRemoveClicked.bind(this);
     }
 
     setRootElement(element) {
@@ -49,6 +58,10 @@ class TodoItemView {
 
     _onCheckboxClicked() {
         this._model.setState(this._checkbox.checked);
+    }
+
+    _onButtonRemoveClicked() {
+        EventsManager.emitEvent(this, "todoItemRemoved", this._model);
     }
 
     /**

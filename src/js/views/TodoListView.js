@@ -36,6 +36,10 @@ class TodoListView {
             function(sender, eventName, eventData) {
                 this.setDisplayMode(eventData);
         }.bind(this));
+        EventsManager.subscribeToEvent("todoItemRemoved", 
+            function(sender, eventNanme, itemModel){
+                this.render();
+        }.bind(this));
 
         this._hasRendered = false;
     }

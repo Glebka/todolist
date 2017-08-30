@@ -69,6 +69,14 @@ class TodoItemModel {
         EventsManager.emitEvent(this, 'todoItemChanged');
     }
 
+    getId() {
+        return this._id;
+    }
+
+    setId() {
+        this._id = this.getGuid();
+    }
+
     toString() {
         return this.toJSON();
     }
@@ -81,5 +89,13 @@ class TodoItemModel {
         }
         return JSON.stringify(obj); // '{"_id":"", "state": false, "text":"ttttt"}'
     }
-
+    getGuid() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+            }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+            s4() + '-' + s4() + s4() + s4();
+    }
 }
