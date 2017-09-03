@@ -45,15 +45,14 @@
 }
 .remove {
 	vertical-align: top;
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    box-sizing: border-box;
-    display: none;
-
-    text-decoration:none;
-    text-align:center;
-    cursor: pointer;
+   display: inline-block;
+   width: 20px;
+   height: 20px;
+   box-sizing: border-box;
+   display: none;
+   text-decoration:none;
+   text-align:center;
+   cursor: pointer;
 	border:none;
 	border-radius: 4px;
 	font:19px Arial, Helvetica, sans-serif;

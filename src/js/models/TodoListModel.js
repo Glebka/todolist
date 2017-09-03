@@ -13,7 +13,7 @@ class TodoListModel {
 
         EventsManager.subscribeToEvent("todoItemRemoved", 
             function(sender, eventNanme, itemModel){
-                this.removeTodoItem(itemModel._id);
+                this.removeTodoItem(itemModel.getId());
         }.bind(this));
     }
 
@@ -36,7 +36,6 @@ class TodoListModel {
      */
     addTodoItem(text) {
         var item = new TodoItemModel(text);
-        item.setId();
 
         this._list.push(item);
         console.log('New todo item has been added: ', text);
@@ -67,6 +66,7 @@ class TodoListModel {
         for (var i = 0; i < this._list.length; i++) {
             if (this._list[i].getId() === id) {
                 this._list.splice(i, 1);
+                break;
             }
         }
     }

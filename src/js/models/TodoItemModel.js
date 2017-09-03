@@ -13,7 +13,7 @@ class TodoItemModel {
         /**
          * _id {Number} - database ID
          */
-        this._id = null;
+        this._id = this.getGuid();
 
         /**
          * _text {String} - todo item text
@@ -71,10 +71,6 @@ class TodoItemModel {
 
     getId() {
         return this._id;
-    }
-
-    setId() {
-        this._id = this.getGuid();
     }
 
     toString() {
