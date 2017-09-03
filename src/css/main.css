@@ -35,10 +35,44 @@
 	margin: 0;
 	width: 20px;
 	height: 20px;
+	vertical-align: top;
 }
 .block-item p {
 	display: inline-block;
 	box-sizing: border-box;
-	width: 430px;
+	width: 400px;
 	padding-left: 15px;
+}
+.remove {
+	vertical-align: top;
+   display: inline-block;
+   width: 20px;
+   height: 20px;
+   box-sizing: border-box;
+   display: none;
+   text-decoration:none;
+   text-align:center;
+   cursor: pointer;
+	border:none;
+	border-radius: 4px;
+	font:19px Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	color:#ffffff;
+	background-color:#ff0000;
+	background-image: -moz-linear-gradient(top, #ff0000 0%, #9e0000 100%);
+	background-image: -webkit-linear-gradient(top, #ff0000 0%, #9e0000 100%);
+	background-image: -o-linear-gradient(top, #ff0000 0%, #9e0000 100%);
+	background-image: -ms-linear-gradient(top, #ff0000 0% ,#9e0000 100%);
+	background-image: linear-gradient(top, #ff0000 0% ,#9e0000 100%);
+	box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;
+}
+.remove:active {
+	box-shadow: none;
+}
+.block-item input[type="checkbox"],
+.remove {
+	margin-top: 15px;
+}
+.block-item:hover .remove {
+	display: inline-block;
 }

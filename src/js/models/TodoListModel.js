@@ -10,6 +10,11 @@ class TodoListModel {
          * _list {Array[TodoItemModel]} - container for TodoItemModel instances
          */
         this._list = [];
+
+        EventsManager.subscribeToEvent("todoItemRemoved", 
+            function(sender, eventNanme, itemModel){
+                this.removeTodoItem(itemModel.getId());
+        }.bind(this));
     }
 
     static fromJSON(jsonString) {
@@ -31,6 +36,7 @@ class TodoListModel {
      */
     addTodoItem(text) {
         var item = new TodoItemModel(text);
+
         this._list.push(item);
         console.log('New todo item has been added: ', text);
         EventsManager.emitEvent(this, 'todoItemAdded');
@@ -56,8 +62,13 @@ class TodoListModel {
      * Removes todo item from the list by given index
      * @param {Number} index - todo itme's index in the list
      */
-    removeTodoItem(index) {
-        this._list = this._list.splice(index,1);        
+    removeTodoItem(id) {
+        for (var i = 0; i < this._list.length; i++) {
+            if (this._list[i].getId() === id) {
+                this._list.splice(i, 1);
+                break;
+            }
+        }
     }
 
     /*removeTodoItemById(id) {

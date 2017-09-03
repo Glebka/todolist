@@ -28,6 +28,7 @@ class FooterView {
         this._completedButton.onclick = this._onButtonClick.bind(this, this._completedButton);
 
         EventsManager.subscribeToEvent('todoItemChanged', this.render.bind(this));
+        EventsManager.subscribeToEvent('todoItemRemoved', this.render.bind(this));
     }
 
     setRootElement(element) {
