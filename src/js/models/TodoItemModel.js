@@ -13,7 +13,7 @@ class TodoItemModel {
         /**
          * _id {Number} - database ID
          */
-        this._id = null; // TodoItemModel._generateGUID();
+        this._id = this.getGuid();
 
         /**
          * _text {String} - todo item text
@@ -69,6 +69,10 @@ class TodoItemModel {
         EventsManager.emitEvent(this, 'todoItemChanged');
     }
 
+    getId() {
+        return this._id;
+    }
+
     toString() {
         return this.toJSON();
     }
@@ -81,5 +85,13 @@ class TodoItemModel {
         }
         return JSON.stringify(obj); // '{"_id":"", "state": false, "text":"ttttt"}'
     }
-
+    getGuid() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+            }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+            s4() + '-' + s4() + s4() + s4();
+    }
 }
