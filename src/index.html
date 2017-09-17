@@ -1,40 +1,55 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="css/main.css">
-        <script type="text/javascript" src="js/models/TodoItemModel.js"></script>
-        <script type="text/javascript" src="js/models/TodoListModel.js"></script>
-        <script type="text/javascript" src="js/views/FooterView.js"></script>
-        <script type="text/javascript" src="js/views/MainView.js"></script>
-        <script type="text/javascript" src="js/views/TodoListView.js"></script>
-        <script type="text/javascript" src="js/views/TodoItemView.js"></script>
-        <script type="text/javascript" src="js/EventsManager.js"></script>
-        <script type="text/javascript">            
-            window.onload = function() {                
-                var todoListModel = TodoListModel.fromJSON(localStorage.todoList);
 
-                EventsManager.subscribeToEvent('todoItemChanged', function() {
-                    localStorage.todoList = todoListModel.toJSON();
-                });
+<head>
+    <link rel="stylesheet" href="css/main.css">
+    <script type="text/javascript" src="js/models/TodoItemModel.js"></script>
+    <script type="text/javascript" src="js/models/TodoListModel.js"></script>
+    <script type="text/javascript" src="js/views/FooterView.js"></script>
+    <script type="text/javascript" src="js/views/MainView.js"></script>
+    <script type="text/javascript" src="js/views/TodoListView.js"></script>
+    <script type="text/javascript" src="js/views/TodoItemView.js"></script>
+    <script type="text/javascript" src="js/EventsManager.js"></script>
+    <script type="text/javascript">
+        window.onload = function() {
 
-                EventsManager.subscribeToEvent('todoItemAdded', function() {
-                    localStorage.todoList = todoListModel.toJSON();
-                });
+            /**
+             * TODO: refactor code here. Move events handlers to another place
+             */
+            EventsManager.subscribeToEvent("displayModeChanged", function(sender, eventName, eventData) {
+                console.log(eventData);
+                localStorage.displayMode = eventData;
+            });
 
-                 EventsManager.subscribeToEvent("todoItemRemoved", function(){
-                    localStorage.todoList = todoListModel.toJSON();
-                });
+            var todoListModel = TodoListModel.fromJSON(localStorage.todoList);
 
-                var body = document.getElementsByTagName('body')[0];
-                var todoListWrapper = document.createElement('div');
-                todoListWrapper.classList.add('main-wrapper');
-                body.appendChild(todoListWrapper);
+            EventsManager.subscribeToEvent('todoItemChanged', function() {
+                localStorage.todoList = todoListModel.toJSON();
+            });
 
-                var mainView = new MainView(todoListWrapper);
-                mainView.setModel(todoListModel);
-                mainView.render();
-            }
-        </script>
-    </head>
-    <body>    
-    </body>
+            EventsManager.subscribeToEvent('todoItemAdded', function() {
+                localStorage.todoList = todoListModel.toJSON();
+            });
+
+            /**
+             * TODO: refactor code here. Move todoListWrapper elememnt creation to HTML code
+             */
+            var body = document.getElementsByTagName('body')[0];
+            var todoListWrapper = document.createElement('div');
+            todoListWrapper.classList.add('main-wrapper');
+            body.appendChild(todoListWrapper);
+
+            var mainView = new MainView(todoListWrapper);
+
+            var displayMode = Number.parseInt(localStorage.displayMode);
+            mainView.setListDisplayMode(displayMode ? displayMode : ListDisplayMode.ALL);
+
+            mainView.setModel(todoListModel);
+            mainView.render();
+        }
+    </script>
+</head>
+
+<body>
+</body>
+
 </html>
