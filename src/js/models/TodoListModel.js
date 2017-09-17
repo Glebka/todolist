@@ -11,10 +11,7 @@ class TodoListModel {
          */
         this._list = [];
 
-        EventsManager.subscribeToEvent("todoItemRemoved", 
-            function(sender, eventNanme, itemModel){
-                this.removeTodoItem(itemModel.getId());
-        }.bind(this));
+        EventsManager.subscribeToEvent('removeTodoItem', this.removeTodoItem, this);            
     }
 
     static fromJSON(jsonString) {
@@ -39,7 +36,7 @@ class TodoListModel {
 
         this._list.push(item);
         console.log('New todo item has been added: ', text);
-        EventsManager.emitEvent(this, 'todoItemAdded');
+        EventsManager.emitEvent('todoItemAdded');
     }
 
     /**
@@ -59,8 +56,8 @@ class TodoListModel {
     }
 
     /**
-     * Removes todo item from the list by given index
-     * @param {Number} index - todo itme's index in the list
+     * Removes todo item from the list
+     * @param {Number} id - todo item's ID that being removed
      */
     removeTodoItem(id) {
         for (var i = 0; i < this._list.length; i++) {
@@ -69,14 +66,8 @@ class TodoListModel {
                 break;
             }
         }
-    }
-
-    /*removeTodoItemById(id) {
-        for(...) {
-            // search for item and delete it
-        }
-        EventsManager.emitEvent(...);
-    }*/
+        EventsManager.emitEvent('todoItemRemoved');
+    }    
 
     toString() {
         return this.toJSON();

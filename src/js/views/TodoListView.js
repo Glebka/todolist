@@ -31,18 +31,9 @@ class TodoListView {
 
         this._displayMode = ListDisplayMode.ALL;
 
-        EventsManager.subscribeToEvent('todoItemChanged', this.render.bind(this));
-
-        // TODO: refactor code here
-        EventsManager.subscribeToEvent('displayModeChanged',
-            function(sender, eventName, eventData) {
-                this.setDisplayMode(eventData);
-        }.bind(this));
-        EventsManager.subscribeToEvent("todoItemRemoved", 
-            function(sender, eventNanme, itemModel){
-                this.render();
-        }.bind(this));
-
+        EventsManager.subscribeToEvent('todoItemChanged', this.render, this);        
+        EventsManager.subscribeToEvent('displayModeChanged', this.setDisplayMode, this);            
+        EventsManager.subscribeToEvent('todoItemRemoved', this.render, this);            
         this._hasRendered = false;
     }
 

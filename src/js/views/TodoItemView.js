@@ -61,14 +61,8 @@ class TodoItemView {
     }
 
     _onButtonRemoveClicked() {
-        EventsManager.emitEvent(this, "todoItemRemoved", this._model);
+        EventsManager.emitEvent('removeTodoItem', this._model.getId());
     }
-
-    /**
-     * _onDeleteClicked() {
-     *      EventsManager.emitEvent(..., this._model._id);
-     * }
-     */
 
     /**
      * Sets the model instance that should be rendered

@@ -57,7 +57,7 @@ class TodoItemModel {
      */
     setText(text) {
         this._text = text;        
-        EventsManager.emitEvent(this, 'todoItemChanged');
+        EventsManager.emitEvent('todoItemChanged');
     }
 
     /**
@@ -66,7 +66,7 @@ class TodoItemModel {
      */
     setState(state) {
         this._state = state;
-        EventsManager.emitEvent(this, 'todoItemChanged');
+        EventsManager.emitEvent('todoItemChanged');
     }
 
     getId() {

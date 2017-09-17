@@ -27,8 +27,8 @@ class FooterView {
         this._activeButton.onclick = this._onButtonClick.bind(this, this._activeButton);
         this._completedButton.onclick = this._onButtonClick.bind(this, this._completedButton);
 
-        EventsManager.subscribeToEvent('todoItemChanged', this.render.bind(this));
-        EventsManager.subscribeToEvent('todoItemRemoved', this.render.bind(this));
+        EventsManager.subscribeToEvent('todoItemChanged', this.render, this);
+        EventsManager.subscribeToEvent('todoItemRemoved', this.render, this);
     }
 
     setRootElement(element) {
@@ -40,7 +40,7 @@ class FooterView {
     }
     
     _onButtonClick(button) {
-        EventsManager.emitEvent(this, 'displayModeChanged', Number.parseInt(button.value));
+        EventsManager.emitEvent('displayModeChanged', Number.parseInt(button.value));
     }
 
     render() {

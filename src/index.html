@@ -15,9 +15,9 @@
             /**
              * TODO: refactor code here. Move events handlers to another place
              */
-            EventsManager.subscribeToEvent("displayModeChanged", function(sender, eventName, eventData) {
-                console.log(eventData);
-                localStorage.displayMode = eventData;
+            EventsManager.subscribeToEvent('displayModeChanged', function(displayMode) {
+                console.log(displayMode);
+                localStorage.displayMode = displayMode;
             });
 
             var todoListModel = TodoListModel.fromJSON(localStorage.todoList);
@@ -27,6 +27,10 @@
             });
 
             EventsManager.subscribeToEvent('todoItemAdded', function() {
+                localStorage.todoList = todoListModel.toJSON();
+            });
+
+            EventsManager.subscribeToEvent('todoItemRemoved', function() {
                 localStorage.todoList = todoListModel.toJSON();
             });
 
