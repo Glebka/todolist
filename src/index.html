@@ -9,30 +9,16 @@
     <script type="text/javascript" src="js/views/TodoListView.js"></script>
     <script type="text/javascript" src="js/views/TodoItemView.js"></script>
     <script type="text/javascript" src="js/EventsManager.js"></script>
+    <script type="text/javascript" src="js/Storage.js"></script>
     <script type="text/javascript">
         window.onload = function() {
 
-            /**
-             * TODO: refactor code here. Move events handlers to another place
-             */
-            EventsManager.subscribeToEvent('displayModeChanged', function(displayMode) {
-                console.log(displayMode);
-                localStorage.displayMode = displayMode;
-            });
+            var todoListModel = Storage.loadTodoList();
 
-            var todoListModel = TodoListModel.fromJSON(localStorage.todoList);
-
-            EventsManager.subscribeToEvent('todoItemChanged', function() {
-                localStorage.todoList = todoListModel.toJSON();
-            });
-
-            EventsManager.subscribeToEvent('todoItemAdded', function() {
-                localStorage.todoList = todoListModel.toJSON();
-            });
-
-            EventsManager.subscribeToEvent('todoItemRemoved', function() {
-                localStorage.todoList = todoListModel.toJSON();
-            });
+            EventsManager.subscribeToEvent('displayModeChanged', Storage.saveDisplayMode, Storage);
+            EventsManager.subscribeToEvent('todoItemChanged', Storage.saveTodoList.bind(Storage, todoListModel), Storage);
+            EventsManager.subscribeToEvent('todoItemAdded', Storage.saveTodoList.bind(Storage, todoListModel), Storage);
+            EventsManager.subscribeToEvent('todoItemRemoved', Storage.saveTodoList.bind(Storage, todoListModel), Storage);
 
             /**
              * TODO: refactor code here. Move todoListWrapper elememnt creation to HTML code
@@ -44,7 +30,7 @@
 
             var mainView = new MainView(todoListWrapper);
 
-            var displayMode = Number.parseInt(localStorage.displayMode);
+            var displayMode = Storage.loadDisplayMode();
             mainView.setListDisplayMode(displayMode ? displayMode : ListDisplayMode.ALL);
 
             mainView.setModel(todoListModel);
