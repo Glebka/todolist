@@ -9,7 +9,7 @@
     <script type="text/javascript" src="js/views/TodoListView.js"></script>
     <script type="text/javascript" src="js/views/TodoItemView.js"></script>
     <script type="text/javascript" src="js/EventsManager.js"></script>
-    <script type="text/javascript" src="js/localstorageHandler.js"></script>
+    <script type="text/javascript" src="js/Storage.js"></script>
     <script type="text/javascript">
         window.onload = function() {
 
@@ -18,21 +18,17 @@
              */
             EventsManager.subscribeToEvent("displayModeChanged", function(sender, eventName, eventData) {
                 console.log(eventData);
-                // localStorage.displayMode = eventData;
-                localstorageHandler.saveDisplayMode(eventData, 'displayMode');
+                Storage.saveDisplayMode(eventData);
             });
 
-            // var todoListModel = TodoListModel.fromJSON(localStorage.todoList);
-            var todoListModel = localstorageHandler.loadTodoList('todoList');
+            var todoListModel = Storage.loadTodoList();
 
             EventsManager.subscribeToEvent('todoItemChanged', function() {
-                // localStorage.todoList = todoListModel.toJSON();
-                localstorageHandler.saveTodoList(todoListModel, 'todoList');
+                Storage.saveTodoList(todoListModel);
             });
 
             EventsManager.subscribeToEvent('todoItemAdded', function() {
-                // localStorage.todoList = todoListModel.toJSON();
-                localstorageHandler.saveTodoList(todoListModel, 'todoList');
+                Storage.saveTodoList(todoListModel);
             });
 
             /**
@@ -45,8 +41,7 @@
 
             var mainView = new MainView(todoListWrapper);
 
-            // var displayMode = Number.parseInt(localStorage.displayMode);
-            var displayMode = localstorageHandler.loadDisplayMode('displayMode');
+            var displayMode = Storage.loadDisplayMode();
             mainView.setListDisplayMode(displayMode ? displayMode : ListDisplayMode.ALL);
 
             mainView.setModel(todoListModel);
