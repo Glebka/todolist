@@ -15,10 +15,10 @@
 
             var todoListModel = Storage.loadTodoList();
 
-            EventsManager.subscribeToEvent('displayModeChanged', Storage.saveDisplayMode, Storage);
-            EventsManager.subscribeToEvent('todoItemChanged', Storage.saveTodoList.bind(Storage, todoListModel), Storage);
-            EventsManager.subscribeToEvent('todoItemAdded', Storage.saveTodoList.bind(Storage, todoListModel), Storage);
-            EventsManager.subscribeToEvent('todoItemRemoved', Storage.saveTodoList.bind(Storage, todoListModel), Storage);
+            EventsManager.subscribeToEvent('displayModeChanged', Storage.saveDisplayMode);
+            EventsManager.subscribeToEvent('todoItemChanged', Storage.saveTodoList.bind(null, todoListModel));
+            EventsManager.subscribeToEvent('todoItemAdded', Storage.saveTodoList.bind(null, todoListModel));
+            EventsManager.subscribeToEvent('todoItemRemoved', Storage.saveTodoList.bind(null, todoListModel));
 
             /**
              * TODO: refactor code here. Move todoListWrapper elememnt creation to HTML code
