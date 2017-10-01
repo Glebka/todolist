@@ -13,33 +13,34 @@
     <script type="text/javascript">
         window.onload = function() {
 
-            var todoListModel = Storage.loadTodoList();
+            //var todoListModel = Storage.loadTodoList();
+            Storage.loadTodoList(function(todoListModel) {
+                EventsManager.subscribeToEvent('displayModeChanged', Storage.saveDisplayMode);
+                EventsManager.subscribeToEvent('todoItemChanged', Storage.saveTodoList.bind(null, todoListModel));
+                EventsManager.subscribeToEvent('todoItemAdded', Storage.saveTodoList.bind(null, todoListModel));
+                EventsManager.subscribeToEvent('todoItemRemoved', Storage.saveTodoList.bind(null, todoListModel));
 
-            EventsManager.subscribeToEvent('displayModeChanged', Storage.saveDisplayMode);
-            EventsManager.subscribeToEvent('todoItemChanged', Storage.saveTodoList.bind(null, todoListModel));
-            EventsManager.subscribeToEvent('todoItemAdded', Storage.saveTodoList.bind(null, todoListModel));
-            EventsManager.subscribeToEvent('todoItemRemoved', Storage.saveTodoList.bind(null, todoListModel));
+                /**
+                 * TODO: refactor code here. Move todoListWrapper elememnt creation to HTML code
+                 */
+                var body = document.getElementsByTagName('body')[0];
+                var todoListWrapper = document.createElement('div');
+                todoListWrapper.classList.add('main-wrapper');
+                body.appendChild(todoListWrapper);
 
-            /**
-             * TODO: refactor code here. Move todoListWrapper elememnt creation to HTML code
-             */
-            var body = document.getElementsByTagName('body')[0];
-            var todoListWrapper = document.createElement('div');
-            todoListWrapper.classList.add('main-wrapper');
-            body.appendChild(todoListWrapper);
+                var mainView = new MainView(todoListWrapper);
 
-            var mainView = new MainView(todoListWrapper);
+                var displayMode = Storage.loadDisplayMode();
+                mainView.setListDisplayMode(displayMode ? displayMode : ListDisplayMode.ALL);
 
-            var displayMode = Storage.loadDisplayMode();
-            mainView.setListDisplayMode(displayMode ? displayMode : ListDisplayMode.ALL);
-
-            mainView.setModel(todoListModel);
-            mainView.render();
+                mainView.setModel(todoListModel);
+                mainView.render();
+            }); 
+            //...           
         }
     </script>
 </head>
 
 <body>
 </body>
-
 </html>
