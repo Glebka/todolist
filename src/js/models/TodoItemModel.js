@@ -26,11 +26,10 @@ class TodoItemModel {
         this._state = false;
     }
 
-    static fromJSON(jsonString) {
-        var unpackedJson = JSON.parse(jsonString);
+    static fromJSON(jsonObject) {        
         var todoItem = new TodoItemModel();
-        for (var key in unpackedJson) {
-            todoItem[key] = unpackedJson[key];
+        for (var key in jsonObject) {
+            todoItem[key] = jsonObject[key];
         }
         return todoItem;
     }
@@ -77,13 +76,13 @@ class TodoItemModel {
         return this.toJSON();
     }
 
-    toJSON() {
+    toJsonObject() {
         var obj = {
             _id: this._id,
             _state: this._state,
             _text: this._text
         }
-        return JSON.stringify(obj); // '{"_id":"", "state": false, "text":"ttttt"}'
+        return obj;
     }
     getGuid() {
         function s4() {

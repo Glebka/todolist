@@ -10,10 +10,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
             //echo '{"displayMode": '.string($storage['displayMode']).'}';
             // {"displayMode": 1}
         } elseif (isset($_GET['todoList'])) {            
-            echo json_encode(array('todoList' => $storage['todoList']));
+            echo json_encode($storage['todoList']);
         } else {
             header('HTTP/1.1 500 Internal Server Error');
-        }        
+        }
         break;
     case 'POST':
         $requestBody = file_get_contents('php://input');
@@ -25,6 +25,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $storage['todoList'] = $jsonBody['todoList'];
         } else {
             header('HTTP/1.1 500 Internal Server Error');
+            var_dump($requestBody);
             exit(0);
         }
         file_put_contents('storage.json', json_encode($storage));

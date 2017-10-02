@@ -76,7 +76,7 @@ class TodoListModel {
     toJSON() {
         var todoList = [];
         for(var i=0; i < this._list.length; i++) {
-            todoList.push(this._list[i].toJSON());
+            todoList.push(this._list[i].toJsonObject());
         }        
         return JSON.stringify(todoList);
     }

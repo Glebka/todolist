@@ -28,13 +28,14 @@
                 todoListWrapper.classList.add('main-wrapper');
                 body.appendChild(todoListWrapper);
 
-                var mainView = new MainView(todoListWrapper);
-
-                var displayMode = Storage.loadDisplayMode();
-                mainView.setListDisplayMode(displayMode ? displayMode : ListDisplayMode.ALL);
-
+                var mainView = new MainView(todoListWrapper);                
                 mainView.setModel(todoListModel);
                 mainView.render();
+
+                Storage.loadDisplayMode(function(displayMode) {
+                    mainView.setListDisplayMode(displayMode ? displayMode : ListDisplayMode.ALL);
+                });
+
             }); 
             //...           
         }

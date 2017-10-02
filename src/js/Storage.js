@@ -1,12 +1,6 @@
 
 'use strict';
 
-//...
-Storage.loadTodoList(function(todoListModel) {
-    // here I can use constructed TodoListModel instance
-});
-//...
-
 class Storage {
     
     conctructor() {
@@ -24,18 +18,53 @@ class Storage {
                 console.error('Request failed.  Returned status of ' + xhr.status);
             }
         };
-        xhr.send();        
+        xhr.send();
     }
 
     static saveTodoList(data) {
-        localStorage.todoList = data.toJSON();
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/src/backend.php');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log('Todo items have been saved.');                
+            } else {
+                console.error('Unable to save todo items!');
+            }
+            console.log('Server response: ', xhr.responseText);
+        };
+        xhr.send('{"todoList": ' + data.toJSON() + '}');
     }
 
-    static loadDisplayMode() {
-        return Number.parseInt(localStorage.displayMode);
+    static loadDisplayMode(callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/src/backend.php?displayMode');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                callback(response.displayMode);
+            }
+            else {
+                console.error('Request failed.  Returned status of ' + xhr.status);
+            }
+        };
+        xhr.send();
     }
 
     static saveDisplayMode(data) {
-        localStorage.displayMode = data;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/src/backend.php');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log('DisplayMode has been saved.');                
+            } else {
+                console.error('Unable to save DisplayMode!');
+            }
+            console.log('Server response: ', xhr.responseText);
+        };
+        xhr.send(JSON.stringify({
+            displayMode: data
+        }));
     }
 }
