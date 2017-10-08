@@ -41,8 +41,8 @@ class Storage {
         xhr.open('GET', '/src/backend.php?displayMode');
         xhr.onload = function() {
             if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                callback(response.displayMode);
+                var response = JSON.parse(xhr.responseText);                
+                callback(parseInt(response.displayMode));
             }
             else {
                 console.error('Request failed.  Returned status of ' + xhr.status);
