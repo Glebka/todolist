@@ -1,12 +1,47 @@
 <?php
 // On GET - read json file content and return it to the client
 // On POST - extract a POST request body and save it to the json file
-
+//----------------FUNCTIONS--------------------------
 function reportErrorAndExit($code, $message) {
     header("HTTP/1.1 $code");
     echo $message;
     exit(0);
 }
+//-----------------------------------
+
+function fetch($result) {
+    $fieldTypes = array();
+    mysql_field_seek($result, 0);
+    while($field = mysql_fetch_field($result)) {
+        switch($field->type) {
+            case 'int':                
+                $fieldTypes[$field->name] = 'integer';                
+                break;            
+            case 'blob':
+                $fieldTypes[$field->name] = 'string';
+            default:
+                $fieldTypes[$field->name] = 'string';
+                break;
+        }
+    }
+    $line = mysql_fetch_assoc($result);
+    $resultData = array();
+    if ($line)
+    {        
+        foreach ($line as $fieldName => $fieldValue) {            
+            $val = $fieldValue;            
+            settype($val, $fieldTypes[$fieldName]);
+            $resultData[$fieldName] = $val;            
+        }
+    } else {
+        $resultData = FALSE;
+    }
+    
+    return $resultData;
+}
+
+
+//----------------END-FUNCTIONS--------------------------
 
 header('Content-Type: application/json');
 $db = mysql_connect("127.0.0.1", "root");
@@ -15,26 +50,6 @@ if (!$db) {
 }
 if(!mysql_select_db("todolist")) {
     reportErrorAndExit(500, mysql_error());
-}
-
-function fetch($result) {
-    $filedTypes = array();
-    while($filed = mysql_fetch_field($result)) {
-        switch($field->type) {
-            case 3:
-                $filedTypes[$field->name] = 'int';
-                break;
-            case 4:
-                $filedTypes[$field->name] = 'float';
-                break;
-            default:
-                $filedTypes[$field->name] = 'string';
-                break;
-        }
-    }
-    function type_cast($value) {
-
-    }
 }
 
 switch ($_SERVER['REQUEST_METHOD']) {
@@ -54,7 +69,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $result = mysql_query($query);
             if ($result) {
                 $todoItems = array();
-                while($todoItem = mysql_fetch_assoc($result)) {
+                while($todoItem = fetch($result)) {
                     $todoItems[] = $todoItem;
                 }
                 echo json_encode($todoItems);

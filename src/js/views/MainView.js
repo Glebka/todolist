@@ -15,10 +15,13 @@ class MainView {
 
     _onTextInputKeyPressed(event) {
         if (event.keyCode === 13) {
-            this._model.addTodoItem(this._textInput.value);
-            this._textInput.value = "";
-            this._listView.render();
-            this._footer.render();
+            if (this._textInput.value.length > 0)
+            {
+                this._model.addTodoItem(this._textInput.value);
+                this._textInput.value = "";
+                this._listView.render();
+                this._footer.render();
+            }            
         }
     }
 
