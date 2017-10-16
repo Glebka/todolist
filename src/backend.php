@@ -11,20 +11,18 @@ function reportErrorAndExit($code, $message) {
 
 function fetch($result) {
     $fieldTypes = array();
-    mysql_field_seek($result, 0);
-    while($field = mysql_fetch_field($result)) {
+    mysqli_field_seek($result, 0);    
+    while($field = mysqli_fetch_field($result)) {                
         switch($field->type) {
-            case 'int':                
+            case 1:                
                 $fieldTypes[$field->name] = 'integer';                
                 break;            
-            case 'blob':
-                $fieldTypes[$field->name] = 'string';
             default:
                 $fieldTypes[$field->name] = 'string';
                 break;
         }
     }
-    $line = mysql_fetch_assoc($result);
+    $line = mysqli_fetch_assoc($result);
     $resultData = array();
     if ($line)
     {        
@@ -44,29 +42,29 @@ function fetch($result) {
 //----------------END-FUNCTIONS--------------------------
 
 header('Content-Type: application/json');
-$db = mysql_connect("127.0.0.1", "root");
+$db = mysqli_connect('127.0.0.1', 'root');
 if (!$db) {
-    reportErrorAndExit(500, mysql_error());    
+    reportErrorAndExit(500, mysqli_error());    
 }
-if(!mysql_select_db("todolist")) {
-    reportErrorAndExit(500, mysql_error());
+if(!mysqli_select_db($db, 'todolist')) {
+    reportErrorAndExit(500, mysqli_error());
 }
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         if (isset($_GET['displayMode'])) {
             $query = 'SELECT * FROM displayMode';
-            $result = mysql_query($query);
+            $result = mysqli_query($db, $query);
             if ($result) {                
-                $resultArray = mysql_fetch_assoc($result);
+                $resultArray = mysqli_fetch_assoc($result);
                 echo json_encode($resultArray);
             } else {
-                reportErrorAndExit(500, mysql_error());
+                reportErrorAndExit(500, mysqli_error());
             }
-            mysql_free_result($result);
+            mysqli_free_result($result);
         } elseif (isset($_GET['todoList'])) {
             $query = 'SELECT * FROM todoitems';
-            $result = mysql_query($query);
+            $result = mysqli_query($db, $query);
             if ($result) {
                 $todoItems = array();
                 while($todoItem = fetch($result)) {
@@ -74,9 +72,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 }
                 echo json_encode($todoItems);
             } else {
-                reportErrorAndExit(500, mysql_error());
+                reportErrorAndExit(500, mysqli_error());
             }
-            mysql_free_result($result);
+            mysqli_free_result($result);
         } else {
             header('HTTP/1.1 500 Internal Server Error');
         }
@@ -86,29 +84,33 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $jsonBody = json_decode($requestBody, TRUE);
         if (isset($jsonBody['displayMode'])) {
             $displayMode = intval($jsonBody['displayMode']);            
-            $result = mysql_query("UPDATE displaymode SET displayMode=$displayMode");
+            $result = mysqli_query($db, "UPDATE displaymode SET displayMode=$displayMode");
             if (!$result) {
-                reportErrorAndExit(500, mysql_error());
+                reportErrorAndExit(500, mysqli_error());
             }            
-        } elseif (isset($jsonBody['todoList'])) {
-            $result = mysql_query('TRUNCATE TABLE todoitems');
+        } elseif (isset($jsonBody['todoList'])) {            
+            $result = mysqli_query($db, 'TRUNCATE TABLE todoitems');
             if (!$result) {
-                reportErrorAndExit(500, mysql_error());
+                reportErrorAndExit(500, mysqli_error());
             }            
             function mysqlStringify($value) {
                 return "'$value'";
             }
 
+            $escaper = function($arg) use($db) {
+                return mysqli_real_escape_string($db, $arg);
+            };
+
             foreach ($jsonBody['todoList'] as $value) {
-                $fields = array_map("mysql_real_escape_string", array_keys($value));
-                $values = array_map("mysql_real_escape_string", array_values($value));
+                $fields = array_map($escaper, array_keys($value));
+                $values = array_map($escaper, array_values($value));
                 $stringified = array_map("mysqlStringify", $values);
                 $query = 'INSERT INTO todoitems ('.implode(', ', $fields).') VALUES ('.implode(', ', $stringified).')';
-                $result = mysql_query($query);
+                $result = mysqli_query($db, $query);
                 if (!$result) {
-                    reportErrorAndExit(500, mysql_error());
+                    reportErrorAndExit(500, mysqli_error());
                 }                
-            }            
+            }             
         } else {
             header('HTTP/1.1 500 Internal Server Error');
             var_dump($requestBody);

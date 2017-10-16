@@ -8,7 +8,7 @@ class Storage {
 
     static loadTodoList(callback) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/src/backend.php?todoList');
+        xhr.open('GET', '/backend.php?todoList');
         xhr.onload = function() {
             if (xhr.status === 200) {
                 var todoListModel = TodoListModel.fromJSON(xhr.responseText);
@@ -23,7 +23,7 @@ class Storage {
 
     static saveTodoList(data) {
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/src/backend.php');
+        xhr.open('POST', '/backend.php');
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
             if (xhr.status === 200) {
@@ -38,7 +38,7 @@ class Storage {
 
     static loadDisplayMode(callback) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/src/backend.php?displayMode');
+        xhr.open('GET', '/backend.php?displayMode');
         xhr.onload = function() {
             if (xhr.status === 200) {
                 var response = JSON.parse(xhr.responseText);                
@@ -53,7 +53,7 @@ class Storage {
 
     static saveDisplayMode(data) {
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/src/backend.php');
+        xhr.open('POST', '/backend.php');
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
             if (xhr.status === 200) {
