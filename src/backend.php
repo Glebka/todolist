@@ -49,7 +49,16 @@ if (!$db) {
 if(!mysqli_select_db($db, 'todolist')) {
     reportErrorAndExit(500, mysqli_error());
 }
-
+/**
+ * GET /backend.php?displayMode
+ * {'displayMode': 1}
+ * 
+ * GET /backend.php?todoList
+ * 
+ * {...}
+ * 
+ * POST ...
+ */
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         if (isset($_GET['displayMode'])) {
