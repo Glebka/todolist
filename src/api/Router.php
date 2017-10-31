@@ -62,9 +62,10 @@ class Router {
                     try
                     {
                         call_user_func_array($record['handler'], array($req, $res));
-                    } catch (Exception $ex) {
-                        //...
+                    } catch (Exception $ex) {                        
                         // 500 Internal server error. Unexpected exception.
+                        $res->status(500)
+                                ->write("Internal server error");                                
                         exit();
                     }                    
                     $isRequestHandled = TRUE;
@@ -73,13 +74,12 @@ class Router {
             }
             if (!$isRequestHandled)
             {
-                // we can't handle request properly because we are missing
-                // a request handler.
+                $res->status(400)->write('Bad request');
             }
         }
         else 
         {
-            // we can't handle this request type
+            $res->status(400)->write('Bad request');
         }
     }
 }
